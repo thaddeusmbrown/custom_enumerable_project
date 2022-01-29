@@ -1,3 +1,5 @@
+require 'pry-byebug'
+
 module Enumerable
   # Your code goes here
 end
@@ -9,5 +11,8 @@ end
 class Array
   # Define my_each here
   def my_each
+    for element in self
+      yield(element)
+    end
   end
 end
