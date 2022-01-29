@@ -2,6 +2,7 @@
 
 require 'pry-byebug'
 
+# Description/Enumerable module for creating enumerable methods from scratch
 module Enumerable
   def my_each_with_index
     index = 0
@@ -14,50 +15,38 @@ module Enumerable
   def my_select
     result = []
     my_each do |element|
-      if yield(element)
-        result.push(element)
-      end
+      result.push(element) if yield(element)
     end
     result
   end
 
   def my_all?
     my_each do |element|
-      unless yield(element)
-        return false
-      end
+      return false unless yield(element)
     end
     true
   end
 
   def my_any?
     my_each do |element|
-      if yield(element)
-        return true
-      end
+      return true if yield(element)
     end
     false
   end
 
   def my_none?
     my_each do |element|
-      if yield(element)
-        return false
-      end
+      return false if yield(element)
     end
     true
   end
 
   def my_count
-    unless block_given?
-      return self.length
-    end
+    return length unless block_given?
 
     count = 0
     my_each do |element|
-      if yield(element)
-        count += 1
-      end
+      count += 1 if yield(element)
     end
     count
   end
@@ -85,8 +74,12 @@ end
 # to this method
 class Array
   def my_each
+    # we are not supposed to use 'each' for this assignment
+    # so I disabled the rubocop warning around this statement
+    # rubocop:disable Style/For
     for element in self
       yield(element)
     end
+    # rubocop:enable Style/For
   end
 end
